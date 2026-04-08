@@ -1,0 +1,35 @@
+{
+  "name": "pi-claude-runtime-core",
+  "version": "0.1.0",
+  "description": "Shared Claude-style runtime contracts for Pi packages.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trotsky1997/pi-claude-runtime-core.git"
+  },
+  "homepage": "https://github.com/trotsky1997/pi-claude-runtime-core",
+  "bugs": {
+    "url": "https://github.com/trotsky1997/pi-claude-runtime-core/issues"
+  },
+  "keywords": [
+    "pi-package"
+  ],
+  "exports": {
+    "./runtime-bridge": "./src/runtime-bridge.ts",
+    "./managed-task-registry": "./src/managed-task-registry.ts",
+    "./managed-task-schemas": "./src/managed-task-schemas.ts",
+    "./managed-runtime-schemas": "./src/managed-runtime-schemas.ts",
+    "./team-state": "./src/team-state.ts",
+    "./agent-discovery": "./src/agent-discovery.ts"
+  },
+  "dependencies": {
+    "zod": "^4.0.1"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2"
+  }
+}
