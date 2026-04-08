@@ -18,7 +18,19 @@ It is not a standalone Pi extension package by itself. Instead, it provides shar
 
 ## Install
 
-Package authors can depend on it from GitHub:
+You usually get this package transitively through `pi-claude-todo-v2`, `pi-claude-plan-mode`, or `pi-claude-subagent`, but Pi can also fetch it directly from GitHub:
+
+```bash
+pi install -l git:github.com/trotsky1997/pi-claude-runtime-core
+```
+
+```bash
+pi install git:github.com/trotsky1997/pi-claude-runtime-core
+```
+
+Direct `pi install` works because Pi can cache the package like any other Git-backed dependency, but this package does not register interactive commands or tools by itself.
+
+Package authors can also depend on it from GitHub with npm:
 
 ```bash
 npm install git+https://github.com/trotsky1997/pi-claude-runtime-core.git#main
