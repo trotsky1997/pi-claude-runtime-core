@@ -15,6 +15,7 @@
     "pi-package"
   ],
   "exports": {
+    "./ask-user-bridge": "./src/ask-user-bridge.ts",
     "./runtime-bridge": "./src/runtime-bridge.ts",
     "./managed-task-registry": "./src/managed-task-registry.ts",
     "./managed-task-schemas": "./src/managed-task-schemas.ts",

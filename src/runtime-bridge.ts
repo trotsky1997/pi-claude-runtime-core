@@ -1,6 +1,7 @@
 import type { Model } from "@mariozechner/pi-ai";
-import type { ModelRegistry, ToolDefinition } from "@mariozechner/pi-coding-agent";
+import type { ExtensionContext, ModelRegistry, ToolDefinition } from "@mariozechner/pi-coding-agent";
 import type { ManagedTaskEntry } from "./managed-task-schemas.js";
+import type { AskUserQuestionBridgeLike, SharedAskUserParams, SharedAskUserOutcome } from "./ask-user-bridge.js";
 
 export type ManagedRuntimeKind = "subagent" | "teammate";
 export type ManagedRuntimeStatus = "idle" | "running" | "completed" | "failed" | "interrupted";
@@ -84,6 +85,10 @@ export interface ClaudeTodoBridgeLike {
   }): ToolDefinition[];
 }
 
+export interface SharedAskUserBridgeLike extends AskUserQuestionBridgeLike {
+  ask(ctx: ExtensionContext, params: SharedAskUserParams): Promise<SharedAskUserOutcome>;
+}
+
 export type ChildRuntimeToolContext = {
   cwd: string;
   senderName: string;
@@ -102,6 +107,7 @@ type SharedBridge = {
   managedRuntimeCoordinator: ManagedRuntimeCoordinatorLike | null;
   managedTaskRegistry: ManagedTaskRegistryLike | null;
   claudeTodoBridge: ClaudeTodoBridgeLike | null;
+  askUserBridge: SharedAskUserBridgeLike | null;
   childRuntimeToolBuilder: ChildRuntimeToolBuilder | null;
 };
 
@@ -111,6 +117,7 @@ const bridge = ((globalThis as Record<string, unknown>)[GLOBAL_KEY] as SharedBri
   managedRuntimeCoordinator: null,
   managedTaskRegistry: null,
   claudeTodoBridge: null,
+  askUserBridge: null,
   childRuntimeToolBuilder: null,
 };
 (globalThis as Record<string, unknown>)[GLOBAL_KEY] = bridge;
@@ -145,6 +152,14 @@ export function setSharedClaudeTodoBridge(bridgeImpl: ClaudeTodoBridgeLike | nul
 
 export function getSharedClaudeTodoBridge(): ClaudeTodoBridgeLike | null {
   return bridge.claudeTodoBridge;
+}
+
+export function setSharedAskUserQuestionBridge(bridgeImpl: SharedAskUserBridgeLike | null): void {
+  bridge.askUserBridge = bridgeImpl;
+}
+
+export function getSharedAskUserQuestionBridge(): SharedAskUserBridgeLike | null {
+  return bridge.askUserBridge;
 }
 
 export function setSharedChildRuntimeToolBuilder(builder: ChildRuntimeToolBuilder | null): void {
